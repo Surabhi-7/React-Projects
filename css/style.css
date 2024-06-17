@@ -447,3 +447,11 @@
     padding-right: 0;
     border-right: none;
 }
+.btn.close{
+    color: white;
+    background-color: red;
+}
+.btn.close:hover{
+    background-color: red;
+    color: white;
+}

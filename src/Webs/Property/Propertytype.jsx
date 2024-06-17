@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import Header2 from "../Components/Header2";
 import Footer from "../Components/Footer";
+import axios from 'axios';
 
 function Propertytype() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch();
+    });
+    const fetch = async () => {
+        const res = await axios.get(`http://localhost:3000/propertytype`);
+        console.log(res.data);
+        setData(res.data)
+    }
   return (
     <>
       <div>
@@ -48,7 +58,10 @@ function Propertytype() {
                     <h1 className="mb-3">Property Types</h1>
                     <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
                 </div>
-                <div className="row g-4">
+                {
+                    data && data.map((value, index, arr) => {
+                        return (
+                            <div className="row g-4">
                     <div className="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                         <a className="cat-item d-block bg-light text-center rounded p-3" href="">
                             <div className="rounded p-4">
@@ -137,7 +150,22 @@ function Propertytype() {
                             </div>
                         </a>
                     </div>
+                    <div className="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a className="cat-item d-block bg-light text-center rounded p-3" href="">
+                            <div className="rounded p-4">
+                                <div className="icon mb-3">
+                                    <img className="img-fluid" src={value.image} alt="Icon"/>
+                                </div>
+                                <h6>{value.type}</h6>
+                                <span>{value.number}</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                        )
+                    })
+                }
+                
             </div>
         </div>
         {/* Category End */}

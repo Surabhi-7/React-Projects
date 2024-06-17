@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import Header2 from "../Components/Header2";
 import Footer from "../Components/Footer";
-
+import { Link } from "react-router-dom";
+import axios from 'axios';
 function Propertyagent() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch();
+    });
+    const fetch = async () => {
+        const res = await axios.get(`http://localhost:3000/propertyagent`);
+        console.log(res.data);
+        setData(res.data)
+    }
   return (
     <>
       <div>
@@ -48,7 +58,10 @@ function Propertyagent() {
                     <h1 className="mb-3">Property Agents</h1>
                     <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
                 </div>
-                <div className="row g-4">
+                {
+                     data && data.map((value, index, arr) => {
+                        return (
+                    <div className="row g-4">
                     <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div className="team-item rounded overflow-hidden">
                             <div className="position-relative">
@@ -113,7 +126,26 @@ function Propertyagent() {
                             </div>
                         </div>
                     </div>
+                    <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div className="team-item rounded overflow-hidden">
+                            <div className="position-relative">
+                                <img className="img-fluid" src={value.agentimage} alt=""/>
+                                <div className="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                                    <a className="btn btn-square mx-1" href=""><i className="fab fa-facebook-f"></i></a>
+                                    <a className="btn btn-square mx-1" href=""><i className="fab fa-twitter"></i></a>
+                                    <a className="btn btn-square mx-1" href=""><i className="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                            <div className="text-center p-4 mt-3">
+                                <h5 className="fw-bold mb-0">{value.agentname}</h5>
+                                <small>{value.designation}</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                   )
+                })
+                }
             </div>
         </div>
          {/* Team End  */}
@@ -131,8 +163,8 @@ function Propertyagent() {
                                     <h1 className="mb-3">Contact With Our Certified Agent</h1>
                                     <p>Eirmod sed ipsum dolor sit rebum magna erat. Tempor lorem kasd vero ipsum sit sit diam justo sed vero dolor duo.</p>
                                 </div>
-                                <a href="" className="btn btn-primary py-3 px-4 me-2"><i className="fa fa-phone-alt me-2"></i>Make A Call</a>
-                                <a href="" className="btn btn-dark py-3 px-4"><i className="fa fa-calendar-alt me-2"></i>Get Appoinment</a>
+                                <Link to="/contact" className="btn btn-primary py-3 px-4 me-2"><i className="fa fa-phone-alt me-2"></i>Make A Call</Link>
+                                <Link to="/appointments" className="btn btn-dark py-3 px-4"><i className="fa fa-calendar-alt me-2"></i>Get Appoinment</Link>
                             </div>
                         </div>
                     </div>
